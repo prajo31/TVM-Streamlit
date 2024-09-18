@@ -4,7 +4,7 @@ import pandas_datareader as web
 import streamlit as st
 from matplotlib import pyplot as plt
 import numpy as np
-from packaging.version import Version
+from distutils.version import LooseVersion
 
 import appdirs as ad
 ad.user_cache_dir = lambda *args: "/tmp"
