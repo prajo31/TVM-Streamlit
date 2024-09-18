@@ -1,4 +1,4 @@
-appdir
+appdirs
 yfinance
 pandas
 pandas_datareader
