@@ -4,7 +4,13 @@ import pandas_datareader.data as web
 import streamlit as st
 from matplotlib import pyplot as plt
 import numpy as np
-from distutils.version import LooseVersion
+from pandas.util._decorators import deprecate_kwarg                     
+from pandas_datareader.av.forex import AVForexReader                    
+from pandas_datareader.av.quotes import AVQuotesReader                  
+from pandas_datareader.av.sector import AVSectorPerformanceReader       
+from pandas_datareader.av.time_series import AVTimeSeriesReader         
+
+                                                                                
 
 import appdirs as ad
 ad.user_cache_dir = lambda *args: "/tmp"
