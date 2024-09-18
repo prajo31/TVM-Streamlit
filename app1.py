@@ -1,11 +1,12 @@
-import appdirs as ad
-ad.user_cache_dir = lambda *args: "/tmp"
 import yfinance as yf
 import pandas as pd
 import pandas_datareader.data as web
 import streamlit as st
 from matplotlib import pyplot as plt
 import numpy as np
+
+import appdirs as ad
+ad.user_cache_dir = lambda *args: "/tmp"
 
 class TimeValueofMoney:
     def __init__(self, pv, fv, periods, ticker, start_date, end_date):
