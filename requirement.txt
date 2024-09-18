@@ -1,5 +1,5 @@
 yfinance
 pandas
-matplot
+matplotlib
 streamlit
 pandas_datareader
