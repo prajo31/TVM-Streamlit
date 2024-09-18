@@ -156,6 +156,9 @@ def main():
     start_date = st.date_input("Start Date", value=pd.to_datetime('2020-01-01'))
     end_date = st.date_input("End Date", value=pd.to_datetime('2024-01-01'))
 
+    # New input field for manual Fed rate
+    fed_rate_manual = st.number_input("Enter Fed Rate (%)", value=2.0)
+  
     if st.button("Calculate"):
         # Create an instance of the TimeValueofMoney class
         tvom = TimeValueofMoney(pv, fv, periods, ticker, start_date, end_date)
