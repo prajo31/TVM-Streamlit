@@ -38,7 +38,11 @@ class TimeValueofMoney:
         self.annualized_stock_return = self.calculate_stock_return()
         self.annualized_fed_rate = self.calculate_average_fed_rate()
         
-    def calculate_future_value_simple(self, rate, periods):
+  def annualize_rate(self, rate):
+      """ Convert the rate from percent to decimal, then annualize it"""
+      return (1 + rate/100) ** 12 - 1
+
+  def calculate_future_value_simple(self, rate, periods):
         """Calculate FV without compounding (simple interest)."""
         return self.pv * (1 + rate)
     
@@ -95,7 +99,9 @@ class TimeValueofMoney:
             'Future Value - Fed Rate': fed_fv_simple,
             'Present Value - Fed Rate': fed_pv_simple,
             'Future Value (Compounded) - Stock Return': stock_fv_compounded,
+            'Present Value (Compounded) - Stock Return': stock_pv_compounded,
             'Future Value (Compounded) - Fed Rate': fed_fv_compounded,
+            'Present Value (Compounded) - Fed Rate': fed_pv_compounded,
             'Annualized Stock Return (%)': self.annualized_stock_return,
             'Annualized Fed Rate (%)': self.annualized_fed_rate
         }
@@ -156,12 +162,15 @@ def main():
     start_date = st.date_input("Start Date", value=pd.to_datetime('2020-01-01'))
     end_date = st.date_input("End Date", value=pd.to_datetime('2024-01-01'))
 
-    # New input field for manual Fed rate
-    fed_rate_manual = st.number_input("Enter Fed Rate (%)", value=2.0)
-  
+    # Manual Fed rate input (optional)
+    manual_fed_rate = st.number_input("Manual Fed Rate (%) (Leave blank to use fetched rate)", value=0.0)
+    
+    if manual_fed_rate == 0.0:
+        manual_fed_rate = None  # If no manual input, we will use fetched rate
+
     if st.button("Calculate"):
         # Create an instance of the TimeValueofMoney class
-        tvom = TimeValueofMoney(pv, fv, periods, ticker, start_date, end_date)
+        tvom = TimeValueofMoney(pv, fv, periods, ticker, start_date, end_date, manual_fed_rate)
 
         # Get the calculations
         calculations = tvom.get_calculations()
@@ -169,9 +178,6 @@ def main():
         # Display the results
         for key, value in calculations.items():
             st.write(f"{key}: {value:.2f}" if isinstance(value, float) else f"{key}: {value}")
-        
-        # Plot the effects
-        tvom.plot_effects()
 
 if __name__ == "__main__":
     main()
