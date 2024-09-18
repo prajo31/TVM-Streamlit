@@ -53,7 +53,7 @@ class TimeValueofMoney:
         
     def annualize_rate(self, rate):
         """Convert the rate from percent to decimal, then annualize it."""
-        return (1 + rate / 100) ** 12 - 1
+        return (1 + rate ) ** 12 - 1
 
     def calculate_future_value_simple(self, rate, periods):
         """Calculate FV without compounding (simple interest)."""
