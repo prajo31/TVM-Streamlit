@@ -4,7 +4,6 @@ import pandas_datareader.data as web
 import streamlit as st
 from matplotlib import pyplot as plt
 import numpy as np
-import disutils
 
 class TimeValueofMoney:
     def __init__(self, pv, fv, periods, ticker, start_date, end_date):
