@@ -5,7 +5,7 @@ import streamlit as st
 from matplotlib import pyplot as plt
 import numpy as np
 from pandas import to_datetime
-improt requests
+import requests
 from pandas_datareader.compat import is_number
 from pandas.util._decorators import deprecate_kwarg                     
 from pandas_datareader.av.forex import AVForexReader                    
