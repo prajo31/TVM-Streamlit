@@ -1,6 +1,6 @@
 yfinance
 pandas
-pandas_datareader==0.10.0
+pandas_datareader
 matplotlib
 streamlit
 numpy
