@@ -4,7 +4,6 @@ import pandas_datareader.data as web
 import streamlit as st
 from matplotlib import pyplot as plt
 import numpy as np
-import distutils
 from distutils.version import LooseVersion
 
 import appdirs as ad
