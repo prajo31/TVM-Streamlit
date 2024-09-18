@@ -21,14 +21,22 @@ from urllib.error import HTTPError
 import appdirs as ad
 ad.user_cache_dir = lambda *args: "/tmp"
 
+import yfinance as yf
+import pandas as pd
+import pandas_datareader.data as web
+import streamlit as st
+from matplotlib import pyplot as plt
+import numpy as np
+
 class TimeValueofMoney:
-    def __init__(self, pv, fv, periods, ticker, start_date, end_date):
+    def __init__(self, pv, fv, periods, ticker, start_date, end_date, manual_fed_rate=None):
         self.pv = pv
         self.fv = fv
         self.periods = periods
         self.ticker = ticker
         self.start_date = start_date
         self.end_date = end_date
+        self.manual_fed_rate = manual_fed_rate  # Accept manual Fed rate input
         
         # Fetch and store data
         self.stock_data = self.get_stock_data()
@@ -36,13 +44,18 @@ class TimeValueofMoney:
         
         # Calculate averages
         self.annualized_stock_return = self.calculate_stock_return()
-        self.annualized_fed_rate = self.calculate_average_fed_rate()
         
-  def annualize_rate(self, rate):
-      """ Convert the rate from percent to decimal, then annualize it"""
-      return (1 + rate/100) ** 12 - 1
+        # If manual rate provided, use it; otherwise calculate average Fed rate
+        if self.manual_fed_rate:
+            self.annualized_fed_rate = self.annualize_rate(self.manual_fed_rate)
+        else:
+            self.annualized_fed_rate = self.calculate_average_fed_rate()
+        
+    def annualize_rate(self, rate):
+        """Convert the rate from percent to decimal, then annualize it."""
+        return (1 + rate / 100) ** 12 - 1
 
-  def calculate_future_value_simple(self, rate, periods):
+    def calculate_future_value_simple(self, rate, periods):
         """Calculate FV without compounding (simple interest)."""
         return self.pv * (1 + rate)
     
@@ -106,50 +119,6 @@ class TimeValueofMoney:
             'Annualized Fed Rate (%)': self.annualized_fed_rate
         }
     
-    def plot_effects(self):
-        # Generate data for plotting
-        periods_range = np.arange(1, 21)  # Periods from 1 to 20 years
-        stock_return_range = np.linspace(0.01, 0.2, 10)  # Annualized stock return from 1% to 20%
-        fed_rate_range = np.linspace(0.01, 0.2, 10)  # Annualized Fed rate from 1% to 20%
-
-        # Create plots
-        fig, axs = plt.subplots(2, 2, figsize=(14, 10))
-
-        # Effect of Stock Return on PV and FV
-        for rate in stock_return_range:
-            pv = [self.calculate_present_value_compounded(rate, p) for p in periods_range]
-            fv = [self.calculate_future_value_compounded(rate, p) for p in periods_range]
-            axs[0, 0].plot(periods_range, pv, label=f'Stock Return {rate*100:.1f}%')
-            axs[0, 1].plot(periods_range, fv, label=f'Stock Return {rate*100:.1f}%')
-        
-        axs[0, 0].set_title('Effect of Stock Return on Present Value')
-        axs[0, 1].set_title('Effect of Stock Return on Future Value')
-        axs[0, 0].set_xlabel('Number of Periods (Years)')
-        axs[0, 1].set_xlabel('Number of Periods (Years)')
-        axs[0, 0].set_ylabel('Present Value')
-        axs[0, 1].set_ylabel('Future Value')
-        axs[0, 0].legend()
-        axs[0, 1].legend()
-
-        # Effect of Fed Rate on PV and FV
-        for rate in fed_rate_range:
-            pv = [self.calculate_present_value_compounded(rate, p) for p in periods_range]
-            fv = [self.calculate_future_value_compounded(rate, p) for p in periods_range]
-            axs[1, 0].plot(periods_range, pv, label=f'Fed Rate {rate*100:.1f}%')
-            axs[1, 1].plot(periods_range, fv, label=f'Fed Rate {rate*100:.1f}%')
-        
-        axs[1, 0].set_title('Effect of Fed Rate on Present Value')
-        axs[1, 1].set_title('Effect of Fed Rate on Future Value')
-        axs[1, 0].set_xlabel('Number of Periods (Years)')
-        axs[1, 1].set_xlabel('Number of Periods (Years)')
-        axs[1, 0].set_ylabel('Present Value')
-        axs[1, 1].set_ylabel('Future Value')
-        axs[1, 0].legend()
-        axs[1, 1].legend()
-
-        # Display plots in Streamlit
-        st.pyplot(fig)
-
 # Streamlit app code
 def main():
     st.title("Time Value of Money Calculator")
