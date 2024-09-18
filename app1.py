@@ -1,6 +1,6 @@
 import yfinance as yf
 import pandas as pd
-import pandas_datareader.data as web
+import pandas_datareader as web
 import streamlit as st
 from matplotlib import pyplot as plt
 import numpy as np
