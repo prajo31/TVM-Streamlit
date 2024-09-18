@@ -4,7 +4,9 @@ import pandas_datareader.data as web
 import streamlit as st
 from matplotlib import pyplot as plt
 import numpy as np
-import datetime
+from pandas import to_datetime
+improt requests
+from pandas_datareader.compat import is_number
 from pandas.util._decorators import deprecate_kwarg                     
 from pandas_datareader.av.forex import AVForexReader                    
 from pandas_datareader.av.quotes import AVQuotesReader                  
