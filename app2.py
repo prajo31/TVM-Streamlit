@@ -180,7 +180,7 @@ class TimeValueofMoney:
 
 # Streamlit app code
 def main():
-    st.title("st.title("Time Value of Money App\nCreated and Maintained by Dr. Joshi, All Rights Reserved")
+    st.title(("Time Value of Money App\nCreated and Maintained by Dr. Joshi, All Rights Reserved")
 ")
 
     # User inputs
