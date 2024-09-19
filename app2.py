@@ -180,7 +180,8 @@ class TimeValueofMoney:
 
 # Streamlit app code
 def main():
-    st.title("Time Value of Money App\nCreated and Maintained by Dr. Joshi")
+    st.title("st.title("Time Value of Money App\nCreated and Maintained by Dr. Joshi, All Rights Reserved")
+")
 
     # User inputs
     pv = st.number_input("Present Value", value=1000)
