@@ -133,7 +133,7 @@ class TimeValueofMoney:
             'Real Rate of Return (%)': self.annualized_real_rate * 100  # Convert to percentage for display
         }
 
-def plot_effects(self):
+    def plot_effects(self):
         # Generate data for plotting
         periods_range = np.arange(1, 21)  # Periods from 1 to 20 years
         stock_return_range = np.linspace(0.01, 0.2, 10)  # Annualized stock return from 1% to 20%
