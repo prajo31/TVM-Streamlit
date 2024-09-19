@@ -106,8 +106,8 @@ class TimeValueofMoney:
         stock_pv_compounded = self.calculate_present_value_compounded(self.annualized_stock_return / 100, self.periods)
         
         # Compound interest calculations using annualized Fed rate
-        fed_fv_compounded = self.calculate_future_value_compounded(self.annualized_fed_rate, self.periods)
-        fed_pv_compounded = self.calculate_present_value_compounded(self.annualized_fed_rate, self.periods)
+        fed_fv_compounded = self.calculate_future_value_compounded(self.annualized_fed_rate / 100, self.periods)
+        fed_pv_compounded = self.calculate_present_value_compounded(self.annualized_fed_rate / 100, self.periods)
 
         # Real rate calculations
         real_pv_simple = self.calculate_present_value_simple(self.annualized_real_rate, self.periods)
