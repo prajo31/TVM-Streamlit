@@ -180,15 +180,15 @@ class TimeValueofMoney:
 
 # Streamlit app code
 def main():
-   st.title("Time Value of Money App\nCreated and Maintained by Dr. Joshi, All Rights Reserved")
+    st.title("Time Value of Money Calculator")
 
     # User inputs
-   pv = st.number_input("Present Value", value=1000)
-   fv = st.number_input("Future Value", value=1500)
-   periods = st.number_input("Number of Periods (Years)", value=10)
-   ticker = st.text_input("Stock Ticker", value='AAPL')
-   start_date = st.date_input("Start Date", value=pd.to_datetime('2020-01-01'))
-   end_date = st.date_input("End Date", value=pd.to_datetime('2024-01-01'))
+    pv = st.number_input("Present Value", value=1000)
+    fv = st.number_input("Future Value", value=1500)
+    periods = st.number_input("Number of Periods (Years)", value=10)
+    ticker = st.text_input("Stock Ticker", value='AAPL')
+    start_date = st.date_input("Start Date", value=pd.to_datetime('2020-01-01'))
+    end_date = st.date_input("End Date", value=pd.to_datetime('2024-01-01'))
 
     # Manual Fed rate and inflation rate inputs
     manual_fed_rate = st.number_input("Manual Fed Rate (%) (Leave blank to use fetched rate)", value=0.0)
@@ -209,9 +209,6 @@ def main():
         # Display the results
         for key, value in calculations.items():
             st.write(f"{key}: {value:.2f}" if isinstance(value, float) else f"{key}: {value}")
-
-        # Plot the effects
-        tvom.plot_effects()
 
 if __name__ == "__main__":
     main()
