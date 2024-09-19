@@ -180,7 +180,7 @@ class TimeValueofMoney:
 
 # Streamlit app code
 def main():
-    st.title("Time Value of Money Calculator")
+    st.title("Time Value of Money App\nCreated and Maintained by Dr. Joshi")
 
     # User inputs
     pv = st.number_input("Present Value", value=1000)
@@ -209,6 +209,9 @@ def main():
         # Display the results
         for key, value in calculations.items():
             st.write(f"{key}: {value:.2f}" if isinstance(value, float) else f"{key}: {value}")
+
+        # Plot the effects
+        tvom.plot_effects()
 
 if __name__ == "__main__":
     main()
