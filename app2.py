@@ -98,8 +98,8 @@ class TimeValueofMoney:
         # Simple interest calculations based on annualized stock return and Fed rate
         stock_pv_simple = self.calculate_present_value_simple(self.annualized_stock_return / 100, self.periods)
         stock_fv_simple = self.calculate_future_value_simple(self.annualized_stock_return / 100, self.periods)
-        fed_pv_simple = self.calculate_present_value_simple(self.annualized_fed_rate, self.periods)
-        fed_fv_simple = self.calculate_future_value_simple(self.annualized_fed_rate, self.periods)
+        fed_pv_simple = self.calculate_present_value_simple(self.annualized_fed_rate / 100, self.periods)
+        fed_fv_simple = self.calculate_future_value_simple(self.annualized_fed_rate / 100, self.periods)
         
         # Compound interest calculations using annualized stock return
         stock_fv_compounded = self.calculate_future_value_compounded(self.annualized_stock_return / 100, self.periods)
