@@ -92,7 +92,7 @@ class TimeValueofMoney:
     def calculate_average_fed_rate(self):
         avg_rate = self.fed_rate_data.mean().values[0]
         annualized_fed = (1 + avg_rate / 100) ** 12 - 1
-        return annualized_fed  # Convert back to percentage
+        return annualized_fed * 100  # Convert back to percentage
     
     def get_calculations(self):
         # Simple interest calculations based on annualized stock return and Fed rate
