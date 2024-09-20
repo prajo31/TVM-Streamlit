@@ -41,7 +41,7 @@ class TimeValueofMoney:
         
         # If manual rate provided, use it; otherwise calculate average Fed rate
         if self.manual_fed_rate is not None:
-            self.annualized_fed_rate = self.manual_fed_rate / 100
+            self.annualized_fed_rate = self.manual_fed_rate 
         else:
             self.annualized_fed_rate = self.calculate_average_fed_rate()
 
