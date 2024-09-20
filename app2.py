@@ -41,14 +41,12 @@ class TimeValueofMoney:
         
         # If manual rate provided, use it; otherwise calculate average Fed rate
         if self.manual_fed_rate is not None:
-            # Pro-rate manual Fed rate if period is less than 12 months
-            months_in_period = (self.end_date.year - self.start_date.year) * 12 + (self.end_date.month - self.start_date.month)
-            if months_in_period < 12:
-                self.annualized_fed_rate = self.manual_fed_rate * (months_in_period / 12)
-            else:
-                self.annualized_fed_rate = ((1 + self.manual_fed_rate / 100) ** 12 - 1) * 100
+            self.annualized_fed_rate = self.manual_fed_rate / 100
         else:
             self.annualized_fed_rate = self.calculate_average_fed_rate()
+
+        # Calculate real rate of return based on inflation
+        self.annualized_real_rate = self.calculate_real_rate(self.annualized_stock_return / 100)
 
     def calculate_real_rate(self, nominal_rate):
         """Calculate the real rate of return using the nominal rate and inflation."""
@@ -93,18 +91,8 @@ class TimeValueofMoney:
     
     def calculate_average_fed_rate(self):
         avg_rate = self.fed_rate_data.mean().values[0]
-    
-        # Calculate the number of months in the period
-        months_in_period = (self.end_date.year - self.start_date.year) * 12 + (self.end_date.month - self.start_date.month)
-    
-        if months_in_period < 12:
-        # Adjust for a partial year (do not fully annualize for periods less than 12 months)
-            annualized_fed = avg_rate * (months_in_period / 12)
-        else:
-            # If the period is a full year or more, we can annualize as before
-            annualized_fed = (1 + avg_rate / 100) ** 12 - 1
-    
-        return annualized_fed * 100  # Convert to percentage
+        annualized_fed = (1 + avg_rate / 100) ** 12 - 1
+        return annualized_fed * 100  # Convert back to percentage
     
     def get_calculations(self):
         # Simple interest calculations based on annualized stock return and Fed rate
@@ -189,9 +177,10 @@ class TimeValueofMoney:
         # Display plots in Streamlit
         st.pyplot(fig)
 
+
 # Streamlit app code
 def main():
-    st.title("Time Value of Money App\nCreated and Maintained by Dr. Joshi, All Rights Reserved")
+    st.title("Time Value of Money Calculator")
 
     # User inputs
     pv = st.number_input("Present Value", value=1000)
@@ -210,20 +199,16 @@ def main():
     if manual_inflation == 0.0:
         manual_inflation = None  # Default to 0 if no inflation is provided
 
-    # Create an instance of the TimeValueofMoney class    
-    tvom = TimeValueofMoney(pv, fv, periods, ticker, start_date, end_date, manual_fed_rate, manual_inflation)
-
     if st.button("Calculate"):
-        
+        # Create an instance of the TimeValueofMoney class
+        tvom = TimeValueofMoney(pv, fv, periods, ticker, start_date, end_date, manual_fed_rate, manual_inflation)
+
         # Get the calculations
         calculations = tvom.get_calculations()
 
         # Display the results
         for key, value in calculations.items():
             st.write(f"{key}: {value:.2f}" if isinstance(value, float) else f"{key}: {value}")
-
-    if st.button("Show Plot"):
-        tvom.plot_effects()
 
 if __name__ == "__main__":
     main()
