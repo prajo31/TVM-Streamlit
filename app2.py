@@ -177,6 +177,11 @@ class TimeValueofMoney:
         # Display plots in Streamlit
         st.pyplot(fig)
 
+    # Add a button before calling the function
+if st.button('Show Plot'):
+    # Call the plot function only if the button is pressed
+    plot_effects()
+
 
 # Streamlit app code
 def main():
