@@ -177,12 +177,6 @@ class TimeValueofMoney:
         # Display plots in Streamlit
         st.pyplot(fig)
 
-    # Add a button before calling the function
-if st.button('Show Plot'):
-    # Call the plot function only if the button is pressed
-    plot_effects()
-
-
 # Streamlit app code
 def main():
     st.title("Time Value of Money App\nCreated and Maintained by Dr. Joshi, All Rights Reserved")
@@ -215,6 +209,10 @@ def main():
         for key, value in calculations.items():
             st.write(f"{key}: {value:.2f}" if isinstance(value, float) else f"{key}: {value}")
 
+          # Add a button before calling the function
+if st.button('Show Plot'):
+    # Call the plot function only if the button is pressed
+    plot_effects()
         # Plot the effects
         tvom.plot_effects()
 
