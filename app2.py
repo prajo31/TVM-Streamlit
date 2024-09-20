@@ -208,7 +208,8 @@ def main():
         # Display the results
         for key, value in calculations.items():
             st.write(f"{key}: {value:.2f}" if isinstance(value, float) else f"{key}: {value}")
-    
+
+    if st.button("Show Plot"):
         tvom.plot_effects()
 
 if __name__ == "__main__":
