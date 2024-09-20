@@ -91,8 +91,17 @@ class TimeValueofMoney:
     
     def calculate_average_fed_rate(self):
         avg_rate = self.fed_rate_data.mean().values[0]
-        annualized_fed = (1 + avg_rate / 100) ** 12 - 1
-        return annualized_fed * 100  # Convert back to percentage
+         # Calculate the number of months in the period
+        months_in_period = (self.end_date.year - self.start_date.year) * 12 + (self.end_date.month - self.start_date.month)
+    
+        if months_in_period < 12:
+            # Adjust the annualization based on the number of months
+            annualized_fed = (1 + avg_rate / 100) ** (12 / months_in_period) - 1
+        else:
+            # Use the existing method for a full 12-month period
+            annualized_fed = (1 + avg_rate / 100) ** 12 - 1
+    
+        return annualized_fed * 100  # Convert to percentage
     
     def get_calculations(self):
         # Simple interest calculations based on annualized stock return and Fed rate
