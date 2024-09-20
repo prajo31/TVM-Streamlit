@@ -210,9 +210,9 @@ def main():
             st.write(f"{key}: {value:.2f}" if isinstance(value, float) else f"{key}: {value}")
 
           # Add a button before calling the function
-if st.button('Show Plot'):
+    if st.button('Show Plot'):
     # Call the plot function only if the button is pressed
-    plot_effects()
+        plot_effects()
         # Plot the effects
         tvom.plot_effects()
 
