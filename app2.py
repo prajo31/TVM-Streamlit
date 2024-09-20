@@ -198,11 +198,11 @@ def main():
     if manual_inflation == 0.0:
         manual_inflation = None  # Default to 0 if no inflation is provided
 
-    
+    # Create an instance of the TimeValueofMoney class    
     tvom = TimeValueofMoney(pv, fv, periods, ticker, start_date, end_date, manual_fed_rate, manual_inflation)
 
     if st.button("Calculate"):
-        # Create an instance of the TimeValueofMoney class
+        
         # Get the calculations
         calculations = tvom.get_calculations()
 
