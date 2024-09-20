@@ -41,12 +41,14 @@ class TimeValueofMoney:
         
         # If manual rate provided, use it; otherwise calculate average Fed rate
         if self.manual_fed_rate is not None:
-            self.annualized_fed_rate = ((1 + self.manual_fed_rate / 100) ** 12 - 1) * 100
+            # Pro-rate manual Fed rate if period is less than 12 months
+            months_in_period = (self.end_date.year - self.start_date.year) * 12 + (self.end_date.month - self.start_date.month)
+            if months_in_period < 12:
+                self.annualized_fed_rate = self.manual_fed_rate * (months_in_period / 12)
+            else:
+                self.annualized_fed_rate = ((1 + self.manual_fed_rate / 100) ** 12 - 1) * 100
         else:
             self.annualized_fed_rate = self.calculate_average_fed_rate()
-
-        # Calculate real rate of return based on inflation
-        self.annualized_real_rate = self.calculate_real_rate(self.annualized_stock_return / 100)
 
     def calculate_real_rate(self, nominal_rate):
         """Calculate the real rate of return using the nominal rate and inflation."""
