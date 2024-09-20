@@ -91,14 +91,15 @@ class TimeValueofMoney:
     
     def calculate_average_fed_rate(self):
         avg_rate = self.fed_rate_data.mean().values[0]
-         # Calculate the number of months in the period
+    
+        # Calculate the number of months in the period
         months_in_period = (self.end_date.year - self.start_date.year) * 12 + (self.end_date.month - self.start_date.month)
     
         if months_in_period < 12:
-            # Adjust the annualization based on the number of months
-            annualized_fed = (1 + avg_rate / 100) ** (12 / months_in_period) - 1
+        # Adjust for a partial year (do not fully annualize for periods less than 12 months)
+            annualized_fed = avg_rate * (months_in_period / 12)
         else:
-            # Use the existing method for a full 12-month period
+            # If the period is a full year or more, we can annualize as before
             annualized_fed = (1 + avg_rate / 100) ** 12 - 1
     
         return annualized_fed * 100  # Convert to percentage
