@@ -211,8 +211,7 @@ def main():
 
           # Add a button before calling the function
     if st.button('Show Plot'):
-    # Call the plot function only if the button is pressed
-        plot_effects()
+    
         # Plot the effects
         tvom.plot_effects()
 
