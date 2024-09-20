@@ -213,7 +213,7 @@ def main():
     if st.button('Show Plot'):
     
         # Plot the effects
-        tvom.plot_effects()
+    tvom.plot_effects()
 
 if __name__ == "__main__":
     main()
